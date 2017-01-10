@@ -223,12 +223,11 @@ public class EventBus {
 
     /** Unregisters the given subscriber from all event classes. */
     public synchronized void unregister(Object subscriber) {
-        List<Class<?>> subscribedTypes = typesBySubscriber.get(subscriber);
+        List<Class<?>> subscribedTypes = typesBySubscriber.remove(subscriber);
         if (subscribedTypes != null) {
             for (Class<?> eventType : subscribedTypes) {
                 unsubscribeByEventType(subscriber, eventType);
             }
-            typesBySubscriber.remove(subscriber);
         } else {
             Log.w(TAG, "Subscriber to unregister was not registered before: " + subscriber.getClass());
         }
